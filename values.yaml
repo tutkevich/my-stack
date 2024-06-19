@@ -1,0 +1,71 @@
+redis:
+  networkPolicy:
+    enabled: true
+  master:
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      periodSeconds: 15
+      timeoutSeconds: 15
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      periodSeconds: 15
+      timeoutSeconds: 15
+  replica:
+    replicaCount: 0
+
+postgresql:
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+  
+web:
+  nameOverride: ""
+  fullnameOverride: ""
+
+  replicaCount: 1
+  image:
+    repository: nginx
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  env:
+  - name: DB_HOST
+    value: my-stack-postgresql
+  - name: DB_USER
+    value: postgres
+  - name: DB_NAME
+    value: my_stack
+  - name: DB_PORT
+    value: 5432
+  - name: REDIS_HOST
+    value: my-stack-redis-master
+  - name: REDIS_PORT
+    value: 6379
+
+  serviceAccount:
+    create: false
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: ""
+    hosts:
+      - host: my-stack.example.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+
+  autoscaling:
+    enabled: false
