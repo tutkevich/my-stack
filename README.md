@@ -1,5 +1,5 @@
 # Application my-stack
-Application my-stack is a web application simulation based on simple nginx image. Docker image hello-world (https://hub.docker.com/_/hello-world)  is not suitable to be used as an application.
+Application my-stack is a web application simulation based on simple nginx image. Docker image **hello-world** (https://hub.docker.com/_/hello-world)  is not suitable to be used as an application.
 
 
 ## Configuration
